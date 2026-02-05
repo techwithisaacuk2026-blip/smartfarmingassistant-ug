@@ -1,0 +1,4 @@
+project_id = "flwaorbqzufzxmlfpgjy"
+
+[functions.farming-assistant]
+verify_jwt = false
