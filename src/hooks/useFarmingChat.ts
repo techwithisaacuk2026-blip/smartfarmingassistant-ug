@@ -16,6 +16,7 @@ export function useFarmingChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
+  const [language, setLanguage] = useState<"en" | "lg">("en");
   const { user } = useAuth();
 
   // Load conversation when ID changes
@@ -178,7 +179,7 @@ export function useFarmingChat() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
           },
-          body: JSON.stringify({ messages: apiMessages }),
+          body: JSON.stringify({ messages: apiMessages, language }),
         });
 
         if (!response.ok) {
@@ -289,7 +290,7 @@ export function useFarmingChat() {
         setIsLoading(false);
       }
     },
-    [messages, conversationId, user]
+    [messages, conversationId, user, language]
   );
 
   const clearChat = useCallback(() => {
@@ -311,5 +312,7 @@ export function useFarmingChat() {
     clearChat,
     conversationId,
     selectConversation,
+    language,
+    setLanguage,
   };
 }
