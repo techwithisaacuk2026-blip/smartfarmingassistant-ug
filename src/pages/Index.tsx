@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { Trash2, Sprout } from "lucide-react";
+import { Trash2, Sprout, Languages } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ChatMessage } from "@/components/ChatMessage";
 import { ChatInput } from "@/components/ChatInput";
@@ -8,7 +8,7 @@ import { ConversationSidebar } from "@/components/ConversationSidebar";
 import { useFarmingChat } from "@/hooks/useFarmingChat";
 
 const Index = () => {
-  const { messages, isLoading, sendMessage, clearChat, conversationId, selectConversation } =
+  const { messages, isLoading, sendMessage, clearChat, conversationId, selectConversation, language, setLanguage } =
     useFarmingChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -50,22 +50,38 @@ const Index = () => {
                 <Sprout className="w-5 h-5 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="font-bold text-foreground">Smart Farming</h1>
-                <p className="text-xs text-muted-foreground">Your crop assistant</p>
+                <h1 className="font-bold text-foreground">
+                  {language === "lg" ? "Obulimi obw'Amagezi" : "Smart Farming"}
+                </h1>
+                <p className="text-xs text-muted-foreground">
+                  {language === "lg" ? "Omuyambi wo ow'ebirime" : "Your crop assistant"}
+                </p>
               </div>
             </div>
 
-            {messages.length > 0 && (
+            <div className="flex items-center gap-2">
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
-                onClick={handleNewConversation}
-                className="text-muted-foreground hover:text-destructive"
+                onClick={() => setLanguage(language === "en" ? "lg" : "en")}
+                className="text-xs font-medium"
               >
-                <Trash2 className="w-4 h-4 mr-1" />
-                Clear
+                <Languages className="w-4 h-4 mr-1" />
+                {language === "en" ? "Luganda" : "English"}
               </Button>
-            )}
+
+              {messages.length > 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleNewConversation}
+                  className="text-muted-foreground hover:text-destructive"
+                >
+                  <Trash2 className="w-4 h-4 mr-1" />
+                  {language === "lg" ? "Jjamu" : "Clear"}
+                </Button>
+              )}
+            </div>
           </div>
         </header>
 
@@ -73,7 +89,7 @@ const Index = () => {
         <main className="flex-1 overflow-y-auto">
           <div className="max-w-3xl mx-auto px-4 py-6">
             {messages.length === 0 ? (
-              <WelcomeScreen onExampleClick={handleExampleClick} />
+              <WelcomeScreen onExampleClick={handleExampleClick} language={language} />
             ) : (
               <div className="space-y-4">
                 {messages.map((message) => (
@@ -116,7 +132,7 @@ const Index = () => {
         {/* Input Area */}
         <footer className="flex-shrink-0 border-t border-border bg-card/50 backdrop-blur-sm">
           <div className="max-w-3xl mx-auto px-4 py-4">
-            <ChatInput onSend={sendMessage} isLoading={isLoading} />
+            <ChatInput onSend={sendMessage} isLoading={isLoading} language={language} />
           </div>
         </footer>
       </div>

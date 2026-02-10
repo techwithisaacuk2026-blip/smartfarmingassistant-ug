@@ -7,9 +7,10 @@ interface ChatInputProps {
   onSend: (message: string, imageBase64?: string) => void;
   isLoading: boolean;
   disabled?: boolean;
+  language?: "en" | "lg";
 }
 
-export function ChatInput({ onSend, isLoading, disabled }: ChatInputProps) {
+export function ChatInput({ onSend, isLoading, disabled, language = "en" }: ChatInputProps) {
   const [message, setMessage] = useState("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageBase64, setImageBase64] = useState<string | null>(null);
@@ -102,7 +103,7 @@ export function ChatInput({ onSend, isLoading, disabled }: ChatInputProps) {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask about your crops, pests, or upload a photo..."
+            placeholder={language === "lg" ? "Buuza ku birime byo, obuwuka, oba teeka ekifaananyi..." : "Ask about your crops, pests, or upload a photo..."}
             disabled={isLoading || disabled}
             className="min-h-[48px] max-h-32 resize-none pr-12 rounded-xl bg-card border-border focus:border-primary transition-colors"
             rows={1}
