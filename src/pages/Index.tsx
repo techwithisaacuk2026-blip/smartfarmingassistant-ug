@@ -133,6 +133,9 @@ const Index = () => {
         <footer className="flex-shrink-0 border-t border-border bg-card/50 backdrop-blur-sm">
           <div className="max-w-3xl mx-auto px-4 py-4">
             <ChatInput onSend={sendMessage} isLoading={isLoading} language={language} />
+            <p className="text-center text-xs text-muted-foreground mt-3">
+              Created by <span className="font-medium text-foreground">Kazibwe Isaac</span> in Uganda · <a href="mailto:techwithisaacuk2026@gmail.com" className="underline hover:text-primary transition-colors">techwithisaacuk2026@gmail.com</a>
+            </p>
           </div>
         </footer>
       </div>
